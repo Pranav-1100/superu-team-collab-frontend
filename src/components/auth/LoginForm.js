@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
@@ -8,7 +8,8 @@ import useAuthStore from '@/store/authStore';
 import toast from 'react-hot-toast';
 import { useSearchParams } from 'next/navigation';
 
-export default function LoginForm() {
+// Separate component for the login form with search params
+function LoginFormContent() {
   const [showPassword, setShowPassword] = React.useState(false);
   const { login, isLoading } = useAuthStore();
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -98,9 +99,10 @@ export default function LoginForm() {
           <div>
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              disabled={isLoading}
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
             >
-              Sign in
+              {isLoading ? 'Signing in...' : 'Sign in'}
             </button>
           </div>
 
@@ -116,4 +118,17 @@ export default function LoginForm() {
       </div>
     </div>
   );
-};
+}
+
+// Main component with Suspense boundary
+export default function LoginForm() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    }>
+      <LoginFormContent />
+    </Suspense>
+  );
+}
