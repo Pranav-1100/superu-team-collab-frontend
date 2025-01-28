@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -9,7 +9,7 @@ import useAuthStore from '@/store/authStore';
 import toast from 'react-hot-toast';
 import { useSearchParams } from 'next/navigation';
 
-export default function RegisterForm() {
+function RegisterFormContent() {
   const [showPassword, setShowPassword] = React.useState(false);
   const router = useRouter();
   const { register: registerAccount } = useAuthStore();
@@ -158,5 +158,18 @@ export default function RegisterForm() {
         </button>
       </form>
     </div>
+  );
+}
+
+// Main component with Suspense boundary
+export default function RegisterForm() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    }>
+      <RegisterFormContent />
+    </Suspense>
   );
 }
