@@ -1,6 +1,5 @@
 'use client';
-
-import React, { Suspense } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -47,10 +46,10 @@ function RegisterFormContent() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold text-gray-900">Create an account</h2>
-        <p className="mt-2 text-sm text-gray-600">
+        <h2 className="text-2xl font-bold text-white">Join SyncScrap</h2>
+        <p className="mt-2 text-sm text-gray-200">
           Already have an account?{' '}
-          <Link href="/auth/login" className="text-blue-600 hover:text-blue-500">
+          <Link href="/auth/login" className="text-blue-400 hover:text-blue-300">
             Sign in
           </Link>
         </p>
@@ -58,22 +57,24 @@ function RegisterFormContent() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="name" className="block text-sm font-medium text-gray-200">
             Full Name
           </label>
           <input
             {...registerField('name', { required: 'Name is required' })}
             type="text"
             id="name"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-white placeholder-gray-400"
+            placeholder="John Doe"
           />
           {errors.name && (
-            <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+            <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>
           )}
         </div>
 
+        {/* Email field */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-200">
             Email address
           </label>
           <input
@@ -87,15 +88,17 @@ function RegisterFormContent() {
             type="email"
             id="email"
             autoComplete="email"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-white placeholder-gray-400"
+            placeholder="you@example.com"
           />
           {errors.email && (
-            <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+            <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
           )}
         </div>
 
+        {/* Password field */}
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-200">
             Password
           </label>
           <div className="relative">
@@ -110,7 +113,8 @@ function RegisterFormContent() {
               type={showPassword ? 'text' : 'password'}
               id="password"
               autoComplete="new-password"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-white placeholder-gray-400"
+              placeholder="••••••••"
             />
             <button
               type="button"
@@ -125,12 +129,13 @@ function RegisterFormContent() {
             </button>
           </div>
           {errors.password && (
-            <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+            <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>
           )}
         </div>
 
+        {/* Confirm Password field */}
         <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-200">
             Confirm Password
           </label>
           <input
@@ -142,10 +147,11 @@ function RegisterFormContent() {
             type="password"
             id="confirmPassword"
             autoComplete="new-password"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-white placeholder-gray-400"
+            placeholder="••••••••"
           />
           {errors.confirmPassword && (
-            <p className="mt-1 text-sm text-red-600">{errors.confirmPassword.message}</p>
+            <p className="mt-1 text-sm text-red-400">{errors.confirmPassword.message}</p>
           )}
         </div>
 
@@ -154,7 +160,7 @@ function RegisterFormContent() {
           disabled={isLoading}
           className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
         >
-          {isLoading ? 'Creating account...' : 'Sign up'}
+          {isLoading ? 'Creating account...' : 'Create account'}
         </button>
       </form>
     </div>
